@@ -1,0 +1,16 @@
+{
+  "name": "@shibiii/svelte-iobserve",
+  "version": "0.1.0",
+  "description": "a svelte action that registers an intersection observer",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shibii/svelte-iobserve.git"
+  },
+  "author": "Seppo Kilpeläinen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shibii/svelte-iobserve/issues"
+  },
+  "homepage": "https://github.com/shibii/svelte-iobserve#readme"
+}
