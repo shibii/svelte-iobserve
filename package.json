@@ -1,6 +1,6 @@
 {
   "name": "@shibiii/svelte-iobserve",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "a svelte action that registers an intersection observer",
   "main": "index.js",
   "repository": {
