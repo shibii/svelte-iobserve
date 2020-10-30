@@ -2,7 +2,11 @@
   "name": "@shibiii/svelte-iobserve",
   "version": "0.1.1",
   "description": "a svelte action that registers an intersection observer",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shibii/svelte-iobserve.git"
@@ -17,5 +21,8 @@
     "svelte",
     "action",
     "intersection observer"
-  ]
+  ],
+  "devDependencies": {
+    "typescript": "^4.0.5"
+  }
 }
