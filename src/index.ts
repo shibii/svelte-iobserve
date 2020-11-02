@@ -1,7 +1,7 @@
 var iosupported = "IntersectionObserver" in window;
 
 export interface Config {
-  onIntersect: () => void;
+  options?: IntersectionObserverInit,
   delay?: number;
   cooldown?: number;
   once?: boolean;
@@ -18,11 +18,15 @@ export const iobserve = (
     return;
   }
 
+  const onIntersection = (entry: IntersectionObserverEntry) => {
+    node.dispatchEvent(new CustomEvent("intersection", {detail: entry}));
+  }
+  
   let timeout: number | null = null;
 
   const observer: IntersectionObserver = new IntersectionObserver((entries) => {
     if (entries[0].isIntersecting === true) {
-      config.onIntersect();
+      onIntersection(entries[0]);
       if (config.once) return observer.unobserve(node);
       if (config.cooldown) {
         observer.unobserve(node);
@@ -32,7 +36,7 @@ export const iobserve = (
         }, config.cooldown);
       }
     }
-  });
+  }, config.options);
 
   if(timeout) clearTimeout(timeout);
   timeout = setTimeout(

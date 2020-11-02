@@ -8,10 +8,13 @@ exports.iobserve = function (node, config) {
             config.fallback();
         return;
     }
+    var onIntersection = function (entry) {
+        node.dispatchEvent(new CustomEvent("intersection", { detail: entry }));
+    };
     var timeout = null;
     var observer = new IntersectionObserver(function (entries) {
         if (entries[0].isIntersecting === true) {
-            config.onIntersect();
+            onIntersection(entries[0]);
             if (config.once)
                 return observer.unobserve(node);
             if (config.cooldown) {
@@ -23,7 +26,7 @@ exports.iobserve = function (node, config) {
                 }, config.cooldown);
             }
         }
-    });
+    }, config.options);
     if (timeout)
         clearTimeout(timeout);
     timeout = setTimeout(function () {

@@ -10,7 +10,7 @@ npm install @shibiii/svelte-iobserve --save
 
 ## usage
 
-This piece of code registers a div element with an intersection observer action. The action is configured with a _mandatory_ callback, which in this example increments the counter. The optional cooldown parameter can be set to slow the pace at which the callback function fires at.
+This piece of code registers a div element with an intersection observer action. The action will emit _intersection_ event when intersection condition is met. The optional cooldown parameter can be set to allow the intersection event to retrigger as long as the intersection condition is met.
 
 ```html
 <script>
@@ -34,32 +34,55 @@ This piece of code registers a div element with an intersection observer action.
 </style>
 
 <h1>{counter}</h1>
-<div use:iobserve={{ onIntersect: increment, cooldown: 1000 }}>
+<div on:intersection={increment} use:iobserve={{ cooldown: 1000 }}>
   every second this div is in the viewport the counter increases by one
 </div>
+```
+
+## intersection event
+
+The iobserve action emits a custom intersection event when intersection triggers. The emitted event passes the [IntersectionObserverEntry](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry) object in the detail property.
+
+```html
+<script>
+  const printDetails = (event) => {
+    console.log(event.detail);
+  };
+</script>
+
+<p on:intersection="{printDetails}" use:iobserve>
+  I print my intersection details
+</p>
 ```
 
 ## configuration
 
 The iobserve action can be configured by passing the following parameters:
 
-- **onIntersect**
-  a mandatory callback function which fires on an intersection
+- **options**
+
+  - this object passes [properties](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver#Properties) to the underlying IntersectionObserver
 
 - **delay**
-  an arming delay before the first intersection can trigger
+
+  - an arming delay in milliseconds before the first intersection can trigger
 
 - **cooldown**
-  a delay before an intersection can trigger again
+
+  - cooldown in milliseconds before intersection can retrigger
+  - unlike the IntersectionObserver api's default behaviour, if this is set, intersection will keep retriggering as long as intersection conditions are met
 
 - **once**
-  if non-falsy, unregisters the observer after the first time it triggers
+
+  - if non-falsy, observer will unregister after the first time it triggers
 
 - **update**
-  a parameter which, if its value changes, the observer will reattach
+
+  - a parameter which, if its value changes, the observer will reattach
+  - upon reattatching the intersection will trigger if conditions are met
 
 - **fallback**
-  a function which will be called if the running platform does not support intersection observers
+  - a function which will be called if the running platform does not support intersection observers
 
 ## license
 

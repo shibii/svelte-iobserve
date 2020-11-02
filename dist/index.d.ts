@@ -1,5 +1,5 @@
 export interface Config {
-    onIntersect: () => void;
+    options?: IntersectionObserverInit;
     delay?: number;
     cooldown?: number;
     once?: boolean;
